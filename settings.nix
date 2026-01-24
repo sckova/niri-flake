@@ -1979,6 +1979,25 @@
                     If you have ${link-opt (subopts options.layout).focus-ring} enabled, the border will be drawn inside (and over) the focus ring.
                   '';
                 };
+
+                blur = section {
+                  enable = optional types.bool false;
+                  passes = optional types.int 4 // {
+                    description = ''
+                      Number of times to apply the blur effect.
+                    '';
+                  };
+                  radius = optional float-or-int 1.0 // {
+                    description = ''
+                      Radius of the blur effect.
+                    '';
+                  };
+                  noise = optional float-or-int 0.1 // {
+                    description = ''
+                      Add grain to the blur.
+                    '';
+                  };
+                };
               }
               {
                 shadow = section {
@@ -3644,6 +3663,14 @@
           ])
           (borderish "focus-ring" cfg.layout.focus-ring)
           (borderish "border" cfg.layout.border)
+          (plain' "blur" [
+            (toggle "off" cfg.layout.blur [
+              (flag "on")
+              (leaf "passes" cfg.layout.blur.passes)
+              (leaf "radius" cfg.layout.blur.radius)
+              (leaf "noise" cfg.layout.blur.noise)
+            ])
+          ])
           (nullable leaf "background-color" cfg.layout.background-color)
           (shadow "shadow" cfg.layout.shadow)
           (nullable tab-indicator "tab-indicator" cfg.layout.tab-indicator)
