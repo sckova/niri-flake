@@ -2652,6 +2652,11 @@
                         If the final value of this field is true, then the window will open in a maximized column.
                       '';
                     };
+                    open-maximized-to-edges = nullable types.bool // {
+                      description = ''
+                        Whether to open this window maximized to the monitor edges, ignoring gaps and struts.
+                      '';
+                    };
                     open-fullscreen = nullable types.bool // {
                       description = ''
                         Whether to open this window in fullscreen.
@@ -2757,6 +2762,26 @@
                       );
 
                     shadow = shadow-rule;
+
+                    background-effect =
+                      section {
+                        xray = nullable types.bool // {
+                          description = "Whether to enable the xray effect for the background.";
+                        };
+                        blur = nullable types.bool // {
+                          description = "Whether to blur the background behind the window.";
+                        };
+                        noise = nullable types.float // {
+                          description = "The amount of noise to apply to the background effect.";
+                        };
+                        saturation = nullable float-or-int // {
+                          description = "The saturation level of the background effect.";
+                        };
+                      }
+                      // {
+                        description = "Background effects applied behind the window, such as blur and xray.";
+                      };
+
                     draw-border-with-background = nullable types.bool // {
                       description = ''
                         Whether to draw the focus ring and border with a background.
@@ -2948,6 +2973,25 @@
                         This is a natural extension of the April Fools' 2025 feature.
                       '';
                     };
+
+                    background-effect =
+                      section {
+                        xray = nullable types.bool // {
+                          description = "Whether to enable the xray effect for the background.";
+                        };
+                        blur = nullable types.bool // {
+                          description = "Whether to blur the background behind the layer surface.";
+                        };
+                        noise = nullable types.float // {
+                          description = "The amount of noise to apply to the background effect.";
+                        };
+                        saturation = nullable float-or-int // {
+                          description = "The saturation level of the background effect.";
+                        };
+                      }
+                      // {
+                        description = "Background effects applied behind the layer surface, such as blur and xray.";
+                      };
                   }
                 ]
               )
@@ -3717,6 +3761,7 @@
             (nullable leaf "open-on-output" cfg.open-on-output)
             (nullable leaf "open-on-workspace" cfg.open-on-workspace)
             (nullable leaf "open-maximized" cfg.open-maximized)
+            (nullable leaf "open-maximized-to-edges" cfg.open-maximized-to-edges)
             (nullable leaf "open-fullscreen" cfg.open-fullscreen)
             (nullable leaf "open-floating" cfg.open-floating)
             (nullable leaf "open-focused" cfg.open-focused)
@@ -3727,6 +3772,12 @@
             (border-rule "focus-ring" cfg.focus-ring)
             (shadow-rule "shadow" cfg.shadow)
             (tab-indicator-rule "tab-indicator" cfg.tab-indicator)
+            (plain' "background-effect" [
+              (nullable leaf "xray" cfg.background-effect.xray)
+              (nullable leaf "blur" cfg.background-effect.blur)
+              (nullable leaf "noise" cfg.background-effect.noise)
+              (nullable leaf "saturation" cfg.background-effect.saturation)
+            ])
             (nullable leaf "opacity" cfg.opacity)
             (nullable leaf "min-width" cfg.min-width)
             (nullable leaf "max-width" cfg.max-width)
@@ -3750,6 +3801,12 @@
             (nullable (map' leaf corner-radius) "geometry-corner-radius" cfg.geometry-corner-radius)
             (nullable leaf "place-within-backdrop" cfg.place-within-backdrop)
             (nullable leaf "baba-is-float" cfg.baba-is-float)
+            (plain' "background-effect" [
+              (nullable leaf "xray" cfg.background-effect.xray)
+              (nullable leaf "blur" cfg.background-effect.blur)
+              (nullable leaf "noise" cfg.background-effect.noise)
+              (nullable leaf "saturation" cfg.background-effect.saturation)
+            ])
           ])
         ]))
 
